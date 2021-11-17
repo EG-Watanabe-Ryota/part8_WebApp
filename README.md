@@ -2,7 +2,7 @@
 開発者の名前の渡邊(Watanabe)のなべ(nabe)をとって鍋を売ろうと安直に考えたECサイトです
 
 # 目的
-E-Grantの技術研修の一環でECサイトを作りながらCakePHPやカートの機能を理解する
+E-Grantの技術研修の一環で、ECサイトを作りながらCakePHPやカートの機能を理解する
 
 # 渡邊のTBシート
 https://docs.google.com/spreadsheets/d/1QRsX6vmvgRFs4AshIIYdIIhzp_XF-gNOhKsmTK2cTxE/edit?usp=sharing
