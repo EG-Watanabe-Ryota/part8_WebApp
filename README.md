@@ -28,7 +28,7 @@ vi /etc/httpd/conf/httpd.conf
 ```
 
 4.DocumentRootを/var/www/htmlから/var/www/appに変更<br>
-直下の<Directory "/var/www/">を次のように変更する
+直下の<Directory "/var/www">を次のように変更する
 ```
 <Directory "/var/www/app">  #ここのパスを変更
     AllowOverride All　#noneからAllに変更<br>
