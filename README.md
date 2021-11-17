@@ -28,12 +28,13 @@ vi /etc/httpd/conf/httpd.conf
 ```
 
 4.DocumentRootを/var/www/htmlから/var/www/appに変更
-
-<Directory "/var/www/app">  ←ここのパスを変更
-    AllowOverride All　←noneからAllに変更
-    Allow open access:
-    Require all granted
-  </Directory>
+```
+<Directory "/var/www/app">  ←ここのパスを変更<br>
+    AllowOverride All　←noneからAllに変更<br>
+    Allow open access:<br>
+    Require all granted<br>
+  </Directory><br>
+```
 
 5.apacheを再起動
 ```
