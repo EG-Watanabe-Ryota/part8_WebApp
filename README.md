@@ -42,7 +42,7 @@ systemctl restart httpd
 
 DB設定などはhttps://book.cakephp.org/4/ja/tutorials-and-examples/cms/database.htmlを参照
 
-'http://localhost:8080'からアクセス可能
+"http://localhost:8080"からアクセス可能
 コンテナから出るときは
 ```
 exit
