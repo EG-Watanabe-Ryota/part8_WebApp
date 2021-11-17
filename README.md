@@ -27,10 +27,11 @@ docker-compose exec part8_WebApp_php_1 bash
 vi /etc/httpd/conf/httpd.conf
 ```
 
-4.DocumentRootを/var/www/htmlから/var/www/appに変更
+4.DocumentRootを/var/www/htmlから/var/www/appに変更<br>
+直下の<Directory "/var/www/">を次のように変更する
 ```
-<Directory "/var/www/app">  ←ここのパスを変更<br>
-    AllowOverride All　←noneからAllに変更<br>
+<Directory "/var/www/app">  #ここのパスを変更
+    AllowOverride All　#noneからAllに変更<br>
     Allow open access:<br>
     Require all granted<br>
   </Directory><br>
