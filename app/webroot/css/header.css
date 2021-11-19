@@ -1,0 +1,44 @@
+header{
+    color: black;
+}
+
+li{
+    list-style-type: none;
+    display: inline-block;
+}
+
+/*ここまでヘッダのCSS*/
+
+.main-content{
+    display: flex;
+}
+
+.category_bar{
+    width: 403px;
+    height: 775px;
+    border: solid 3px #000000;
+    margin-right:5px;
+}
+
+/*ここまで左のCSS*/
+
+.product_wrapper{
+    width: 100%;
+    height: auto;
+}
+
+hr {
+    border-width: 1px 0px 0px 0px;
+    border-style: solid;
+    border-color: #cccccc;
+    height: 1px;
+    }
+
+.products{
+    display: flex;
+}
+
+.product{
+    width: 300px;
+    margin:0 0;
+}

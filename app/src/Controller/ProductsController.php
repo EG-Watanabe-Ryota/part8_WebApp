@@ -13,4 +13,11 @@ class ProductsController extends AppController
          * set()はviewに変数を渡す関数**/
         $this->set(compact('products'));
     }
+
+    public function detail($id = null){
+        $product = $this->Products->findByProduct_id($id)->firstOrFail();
+        $this->set(compact('product'));
+
+    }
+
 }

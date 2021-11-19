@@ -1,27 +1,52 @@
-<!-- File: templates/Product/index.php -->
+<?php
+    echo $this->Html->css('header');
+?>
 
-<h1>商品一覧</h1>
-<table>
-    <tr>
-        <th>商品画像</th>
-        <th>商品名</th>
-        <th>販売価格</th>
-        <th>販売日</th>
-    </tr>
+<header>
+    <h1>Nabe</h1>
+    <div class='new_member'>
 
-    <!-- ここで、$goods_muster クエリーオブジェクトを繰り返して、記事の情報を出力します -->
+    </div>
 
-    <?php foreach ($products as $product): ?>
-    <tr>
-        <td>
-            nasi
-        </td>
-        <td>
-            <?= h($product->product_name) ?>
-        </td>
-        <td>
-            <?= h($product->product_price) ?>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</table>
+    <div class='login'>
+
+    </div>
+
+    <div class='cart'>
+
+    </div>
+
+    <div class='header_bar'>
+        <ul>
+            <li>HOME</li>
+            <li>カテゴリ</li>
+            <li>カテゴリ</li> 
+            <li>カテゴリ</li>                                                    
+        </ul>
+    </div>
+</header>
+
+<div class='main-content'>
+        <div class='category_bar'>
+            <p>全てから探す</p>
+        </div>
+
+        <div class="product_wrapper">
+            <p>TOP>ステンレス</p>
+            <h2>ステンレス</h2>
+            <hr>
+            <div class='products'>
+            <?php foreach($products as $product):?>
+                <div class='product'>
+                    <?php echo $this->Html->image(h($product->product_img),['width' => '257px','height' => '241px']); ?>
+                    <p><?= h($product->product_name) ?></p>
+                    <p>￥<?= h($product->product_price) ?></p>
+                    <?= $this->Html->link('商品詳細', ['action' => 'detail', $product->product_id]) ?>
+                    <p>数量<p>
+                    <button><a href="">商品詳細</a></button>
+                </div>
+            <?php endforeach; ?>
+            </div>
+            
+        </div>
+</div>
