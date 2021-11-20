@@ -1,5 +1,6 @@
 <?php
-    echo $this->Html->css('header');
+    echo $this->Html->css('template');
+    echo $this->Html->css('products');
 ?>
 
 <header>
@@ -36,16 +37,25 @@
             <h2>ステンレス</h2>
             <hr>
             <div class='products'>
-            <?php foreach($products as $product):?>
-                <div class='product'>
-                    <?php echo $this->Html->image(h($product->product_img),['width' => '257px','height' => '241px']); ?>
-                    <p><?= h($product->product_name) ?></p>
-                    <p>￥<?= h($product->product_price) ?></p>
-                    <?= $this->Html->link('商品詳細', ['action' => 'detail', $product->product_id]) ?>
-                    <p>数量<p>
-                    <button><a href="">商品詳細</a></button>
-                </div>
-            <?php endforeach; ?>
+                <?php foreach($products as $product):?>
+                    <div class='product'>
+                        <?php echo $this->Html->image(h($product->img),['width' => '237px','height' => '221px']); ?>
+                        <p><?= h($product->name) ?></p>
+                        <p><?= h($product->price) ?>円(税込)</p>
+                        <button style="background-color:white; border-color:black; margin-top:10px;">
+                            <?= $this->Html->link('商品詳細', ['action' => 'detail', $product->id]) ?>
+                        </button>
+                        
+                        <form method="post" action="">
+                            <label style="display:block; margin:0 0;">
+                                数量:<input type="number" name="quantity"  min="0" style="width:62px; height:27px; background-color:white;" />
+                            </label>
+                            <label style="display:block;">
+                                <button type='submit' name='action' value='send'>カートに追加</button>
+                            </label>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
             </div>
             
         </div>

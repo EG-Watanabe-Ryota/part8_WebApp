@@ -15,7 +15,7 @@ class ProductsController extends AppController
     }
 
     public function detail($id = null){
-        $product = $this->Products->findByProduct_id($id)->firstOrFail();
+        $product = $this->Products->findById($id)->firstOrFail();
         $this->set(compact('product'));
 
     }
