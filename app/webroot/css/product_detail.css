@@ -1,0 +1,12 @@
+.product_detail{
+    display: flex;
+    margin-left: 40px;
+}
+
+.product_img{
+    margin-right: 40px;
+}
+
+.product_exp{
+    margin-bottom: 20px;
+}
