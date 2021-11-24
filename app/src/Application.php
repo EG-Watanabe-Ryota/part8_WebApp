@@ -28,13 +28,18 @@ use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 
+use App\Authentication\AppAuthenticationServiceProvider;
+use Authentication\Middleware\AuthenticationMiddleware;
+
+
+
 /**
  * Application setup class.
  *
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication
+class Application extends BaseApplication 
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -64,6 +69,7 @@ class Application extends BaseApplication
         }
 
         // Load more plugins here
+        $this->addPlugin('Authentication');
     }
 
     /**
@@ -92,6 +98,8 @@ class Application extends BaseApplication
             // `new RoutingMiddleware($this, '_cake_routes_')`
             ->add(new RoutingMiddleware($this))
 
+            
+
             // Parse various types of encoded request bodies so that they are
             // available as array through $request->getData()
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
@@ -101,7 +109,11 @@ class Application extends BaseApplication
             // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
-            ]));
+            ]))
+
+            ->add(new AuthenticationMiddleware(
+                new AppAuthenticationServiceProvider()
+            ));
 
         return $middlewareQueue;
     }
@@ -133,4 +145,6 @@ class Application extends BaseApplication
 
         // Load more plugins here
     }
+
+    
 }

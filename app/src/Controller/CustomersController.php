@@ -1,32 +1,63 @@
+<?php
 namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\EventInterface;
 
-class UsersController extends AppController
+class CustomersController extends AppController
 {
     public function index()
     {
-        $this->set('users', $this->Users->find('all'));
+        $this->set('customers', $this->Customers->find('all'));
     }
 
     public function view($id)
     {
-        $user = $this->Users->get($id);
-        $this->set(compact('user'));
+        $customer = $this->Customers->get($id);
+        $this->set(compact('customer'));
     }
 
     public function add()
     {
-        $user = $this->Users->newEmptyEntity();
+        $customer = $this->Customers->newEmptyEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
+            $customer = $this->Customers->patchEntity($customer, $this->request->getData());
+            if ($this->Customers->save($customer)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'add']);
             }
             $this->Flash->error(__('Unable to add the user.'));
         }
-        $this->set('user', $user);
+        $this->set('customer', $customer);
     }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->allowUnauthenticated(['login', 'logout','add']);
+    }
+
+    public function login()
+    {
+        $result = $this->Authentication->getResult();
+        debug($result);
+
+        // 認証成功
+        if ($result->isValid()) {
+            $target = $this->Authentication->getLoginRedirect() ?? '/products/index';
+            return $this->redirect($target);
+        }
+        // ログインできなかった場合
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->Flash->error('Invalid username or password');
+        }
+    }
+
+    public function logout()
+    {
+        $this->Authentication->logout();
+        return $this->redirect(['action' => 'login']);
+    }
+
 }
+?>
