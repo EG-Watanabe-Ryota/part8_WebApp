@@ -17,6 +17,12 @@ class CustomersController extends AppController
         $this->set(compact('customer'));
     }
 
+    public function mypage(){
+        $customer = $this->Authentication->getIdentity();
+        debug($customer);
+        
+    }
+
     public function add()
     {
         $customer = $this->Customers->newEmptyEntity();
@@ -40,11 +46,11 @@ class CustomersController extends AppController
     public function login()
     {
         $result = $this->Authentication->getResult();
-        debug($result);
+        
 
         // 認証成功
         if ($result->isValid()) {
-            $target = $this->Authentication->getLoginRedirect() ?? '/products/index';
+            $target = $this->Authentication->getLoginRedirect() ?? '/customers/mypage';
             return $this->redirect($target);
         }
         // ログインできなかった場合
@@ -58,6 +64,7 @@ class CustomersController extends AppController
         $this->Authentication->logout();
         return $this->redirect(['action' => 'login']);
     }
+
 
 }
 ?>
