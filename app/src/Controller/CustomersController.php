@@ -20,6 +20,7 @@ class CustomersController extends AppController
     public function mypage(){
         $customer = $this->Authentication->getIdentity();
         debug($customer);
+        exit;
         
     }
 

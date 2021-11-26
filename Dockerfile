@@ -82,3 +82,6 @@ RUN composer self-update && composer create-project --prefer-dist cakephp/app:4.
 #保存を忘れずに
 
 #localhost:8080/Ar
+
+#特定のコミットまで戻したいとき
+#git reset --hard ハッシュ値
