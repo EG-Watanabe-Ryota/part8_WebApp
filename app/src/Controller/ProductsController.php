@@ -24,11 +24,14 @@ class ProductsController extends AppController
             
             if ($session->check('carts')) {
                 $items = $session->read('carts');
+
             }
             
-            $items[] = ['product_name' =>$product_name,'quantity'=> $quantity];
+            $items[] = ['product_name' =>$product_name,
+                        'quantity'=> $quantity];
             
             //Session::write($key, $value)
+            //carts.0で試してみる
             $session->write('carts',$items);
             debug($session->read('carts'));
 
@@ -38,13 +41,6 @@ class ProductsController extends AppController
             // Post送信ではない場合の処理
     
         }
-
-
-        
-        
-
-       
-
         
     }
 

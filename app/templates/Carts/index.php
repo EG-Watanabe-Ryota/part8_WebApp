@@ -12,11 +12,12 @@
                     </td>
                     <form action="" method="POST">
                         <td>
-                            <input type="number" name="quantity"   value='<?=$items[$i]['quantity']?>'/>
+                            <input type="number" name="quantity"   min='0' value='<?=$items[$i]['quantity']?>'/>
                         </td>
                         <td>
                             <input type="hidden" name="kind" value="change">
                             <input type="hidden" name="index" value=<?=$i?>>
+                            <input type="hidden" name="name" value=<?=$items[$i]['product_name']?>>
                             <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>">
                             <input type="submit" value="変更">
                         </td>

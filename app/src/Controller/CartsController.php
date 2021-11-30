@@ -21,13 +21,14 @@ class CartsController extends AppController
             //削除機能
             if( $_POST['kind'] === 'delete' || ($_POST['kind'] === 'change' && $_POST['quantity'] === '0')){
                 $i = $_POST['index'];
-                unset($_SESSION['carts'][(int)$i]);
+                $session->delete("carts.${i}");
                 $this->redirect(['controller'=>'carts','action'=>'index']);
             }
-            //数量更新機能
+            //数量更新機能(ここはイベント使いたいね)
             else if( $_POST['kind'] === 'change'){
                 $i = $_POST['index'];
-                $_SESSION['carts'][(int)$i]['quantity'] = $_POST['quantity'];
+                $items = ['product_name' =>$_POST['name'],'quantity'=> $_POST['quantity']];
+                $session->write("carts.${i}",$items);
                 $this->redirect(['controller'=>'carts','action'=>'index']);
             }
         }
