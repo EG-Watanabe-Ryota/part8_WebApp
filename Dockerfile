@@ -55,7 +55,7 @@ RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 
 #/var/wwwに移動
-cd /var/www
+RUN cd /var/www
 
 #Install CakePHP(composerコマンドが使える場合)*1
 RUN composer self-update && composer create-project --prefer-dist cakephp/app:4.* app
@@ -85,3 +85,5 @@ RUN composer self-update && composer create-project --prefer-dist cakephp/app:4.
 
 #特定のコミットまで戻したいとき
 #git reset --hard ハッシュ値
+
+#認証インストール忘れずに
