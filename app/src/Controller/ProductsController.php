@@ -32,9 +32,6 @@ class ProductsController extends AppController
             $session->write('carts',$items);
             debug($session->read('carts'));
 
-
-            
-            
     
         } else {
     
