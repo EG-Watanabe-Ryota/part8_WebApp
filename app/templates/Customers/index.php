@@ -1,0 +1,1 @@
+<p>ようこそ<?= h($customer.email)?></p>

@@ -54,11 +54,15 @@
                             <label style="display:block; margin:0 0;">
                                 数量:<input type="number" name="quantity"  min="0" style="width:62px; height:27px; background-color:white;" />
                             </label>
+                            <!--カートに入れる商品名を送るとこ-->
+                            <input type="hidden" name="product_name" value=<?=$product->name?>>
 
                             <!--カート追加ボタン-->
                             <label style="display:block;">
                                 <button type='submit' name='product_id' value=<?=$product->id?>>カートに追加</button>
                             </label>
+
+                            <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>">
                         </form>
                     </div>
                 <?php endforeach; ?>
