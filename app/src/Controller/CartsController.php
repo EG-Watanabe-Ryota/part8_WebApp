@@ -10,11 +10,8 @@ class CartsController extends AppController
     
         //debug($session->read('carts'));
         
-
         $items = $session->read('carts');
         $this->set(compact('items'));
-
-        
 
         //カート内編集機能
         if ($this->getRequest()->isPost()) {
@@ -24,10 +21,13 @@ class CartsController extends AppController
                 $session->delete("carts.${i}");
                 $this->redirect(['controller'=>'carts','action'=>'index']);
             }
-            //数量更新機能(ここはイベント使いたいね)
+            //数量更新機能(ここは後々イベント使いたい)
             else if( $_POST['kind'] === 'change'){
                 $i = $_POST['index'];
-                $items = ['product_name' =>$_POST['name'],'quantity'=> $_POST['quantity']];
+                $items =['product_name' =>$_POST['name'],
+                         'quantity'=> $_POST['quantity'],
+                         'price'=>$_POST['price']];
+
                 $session->write("carts.${i}",$items);
                 $this->redirect(['controller'=>'carts','action'=>'index']);
             }

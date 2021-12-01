@@ -20,18 +20,18 @@ class ProductsController extends AppController
             // Post送信の場合の処理
             $product_name=$_POST['product_name'];
             $quantity=$_POST['quantity'];
+            $price=$_POST['price'];
             
             
             if ($session->check('carts')) {
                 $items = $session->read('carts');
-
             }
             
             $items[] = ['product_name' =>$product_name,
-                        'quantity'=> $quantity];
+                        'quantity'=> $quantity,
+                        'price' => $price];
             
             //Session::write($key, $value)
-            //carts.0で試してみる
             $session->write('carts',$items);
             debug($session->read('carts'));
 

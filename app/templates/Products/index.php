@@ -52,10 +52,12 @@
 
                             <!--数量入力テキストボックス-->
                             <label style="display:block; margin:0 0;">
-                                数量:<input type="number" name="quantity"  min="0" style="width:62px; height:27px; background-color:white;" />
+                                数量:<input type="number" name="quantity"  min="1" value='1' style="width:62px; height:27px; background-color:white;" />
                             </label>
                             <!--カートに入れる商品名を送るとこ-->
                             <input type="hidden" name="product_name" value=<?=$product->name?>>
+                            <!--値段送るとこ-->
+                            <input type="hidden" name="price" value=<?=$product->price?>>
 
                             <!--カート追加ボタン-->
                             <label style="display:block;">
