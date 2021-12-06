@@ -3,29 +3,6 @@
     echo $this->Html->css('products');
 ?>
 
-<header>
-    <h1>Nabe</h1>
-    <div class='new_member'>
-
-    </div>
-
-    <div class='login'>
-
-    </div>
-
-    <div class='cart'>
-
-    </div>
-
-    <div class='header_bar'>
-        <ul>
-            <li>HOME</li>
-            <li>カテゴリ</li>
-            <li>カテゴリ</li> 
-            <li>カテゴリ</li>                                                    
-        </ul>
-    </div>
-</header>
 
 <div class='main-content'>
         <div class='category_bar'>
@@ -58,6 +35,8 @@
                             <input type="hidden" name="product_name" value=<?=$product->name?>>
                             <!--値段送るとこ-->
                             <input type="hidden" name="price" value=<?=$product->price?>>
+                            <!--imgパス送るとこ-->
+                            <input type="hidden" name="img" value=<?=$product->img?>>
 
                             <!--カート追加ボタン-->
                             <label style="display:block;">

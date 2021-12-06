@@ -21,6 +21,7 @@ class ProductsController extends AppController
             $product_name=$_POST['product_name'];
             $quantity=$_POST['quantity'];
             $price=$_POST['price'];
+            $img=$_POST['img'];
             
             
             if ($session->check('carts')) {
@@ -29,7 +30,8 @@ class ProductsController extends AppController
             
             $items[] = ['product_name' =>$product_name,
                         'quantity'=> $quantity,
-                        'price' => $price];
+                        'price' => $price,
+                        'img' => $img];
             
             //Session::write($key, $value)
             $session->write('carts',$items);
@@ -47,6 +49,37 @@ class ProductsController extends AppController
     public function detail($id = null){
         $product = $this->Products->findById($id)->firstOrFail();
         $this->set(compact('product'));
+
+                //セッション周り
+        $session = $this->getRequest()->getSession();
+        //$session->destroy();
+        if ($this->getRequest()->isPost()) {
+            // Post送信の場合の処理
+            $product_name=$_POST['product_name'];
+            $quantity=$_POST['quantity'];
+            $price=$_POST['price'];
+            $img=$_POST['img'];
+            
+            
+            if ($session->check('carts')) {
+                $items = $session->read('carts');
+            }
+            
+            $items[] = ['product_name' =>$product_name,
+                        'quantity'=> $quantity,
+                        'price' => $price,
+                        'img' => $img];
+            
+            //Session::write($key, $value)
+            $session->write('carts',$items);
+            debug($session->read('carts'));
+
+    
+        } else {
+    
+            // Post送信ではない場合の処理
+    
+        }
 
     }
 

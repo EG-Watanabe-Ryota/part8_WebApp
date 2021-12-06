@@ -21,17 +21,27 @@ class CartsController extends AppController
                 $session->delete("carts.${i}");
                 $this->redirect(['controller'=>'carts','action'=>'index']);
             }
-            //数量更新機能(ここは後々イベント使いたい)
+            //数量更新機能
             else if( $_POST['kind'] === 'change'){
                 $i = $_POST['index'];
                 $items =['product_name' =>$_POST['name'],
                          'quantity'=> $_POST['quantity'],
-                         'price'=>$_POST['price']];
+                         'price'=>$_POST['price'],
+                         'img' => $_POST['img']];
 
                 $session->write("carts.${i}",$items);
                 $this->redirect(['controller'=>'carts','action'=>'index']);
             }
         }
+
+        //ログイン判定
+        $result = $this->Authentication->getResult();
+        $islogin = false;
+        if($result->isValid()){
+            $islogin = true;
+        }
+        $this->set(compact('islogin'));
+
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
