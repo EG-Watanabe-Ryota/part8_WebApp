@@ -34,35 +34,34 @@ class OrdersController extends AppController
         foreach ($payments_query as $row) {
             $payment_methods[] = ['id'=>$row->id,'name'=>$row->name];
         }
-        //debug
-        // foreach ( $payment_methods as $key => $valu) {
-        //    debug($payment_methods[$key]);
-        // }
         $this->set(compact('payment_methods'));
-        //postで渡す方法でやるかセッションで持たせるのもアリ
         
     }
 
-
+    
     public function confirm(){
         //セッションの破棄を忘れずに！！！！
+        $session = $this->getRequest()->getSession(); //セッション処理
+        $result = $this->Authentication->getResult(); //ログインしてるかどうか調べる変数
+        $customer = $result->getData(); //ログインしているユーザー情報をもってくる
+        $islogin = false; //ログイン判定に用いる変数
 
-        //ログイン判定
-        $result = $this->Authentication->getResult();
-
-        //ログインしているユーザー情報をもってくる
-        $customer = $result->getData();
-        // debug($customer->id);
-        $islogin = false;
         //ログイン時の処理
         if($result->isValid()){
-            //ログインしてた変数を真にする
-            $islogin = true;
+            $islogin = true;//ログインしてた変数を真にする
 
             //前のページでPOSTで送信してもらった支払い方法選択の情報を回収
             $method_result = $_POST['payment'];
-            debug($method_result);
-            //DB処理(customers)
+
+            //DB処理(paymentsテーブル)
+            $payments = TableRegistry::getTableLocator()->get('Payments');
+            $payments_query = $payments->find()->where(['id' => $method_result]);
+            foreach ($payments_query as $row){
+                $payment_name=$row->name;
+            }
+            $this->set(compact('payment_name'));
+
+            //DB処理(customersテーブル)
             $customers = TableRegistry::getTableLocator()->get('customers');
             $customers_query = $customers->find()->where(['id' => $customer->id]);
             foreach ($customers_query as $row) {
@@ -74,79 +73,71 @@ class OrdersController extends AppController
             }
             $this->set(compact('name','postal_code','address','tel'));
         }
-        
-        $this->set(compact('islogin'));
+        //ログインしてないときの処理
+        else{
+            $guest=$session->read('guest');//ゲストの情報を読み込む
 
-        //セッション処理
-        $session = $this->getRequest()->getSession();
-        //ゲストの情報を読み込む
-        $guest=$session->read('guest');
-        //都道府県判定(穏やかな比較でも問題ないので、switchを使う)
-        switch($guest['order_pref']){
-            case 1:
-                $guest['order_pref'] = '北海道';
-                break;
-            case 2:
-                $guest['order_pref'] = '青森県';
-                break;
-            case 3:
-                $guest['order_pref'] = '岩手県';
-                break;
-            case 4:
-                $guest['order_pref'] = '宮城県';
-                break;  
-            case 5:
-                $guest['order_pref'] = '秋田県';
-                break;
-            case 6:
-                $guest['order_pref'] = '山形県';
-                break;
-            case 7:
-                $guest['order_pref'] = '福島県';
-                break;
-            case 8:
-                $guest['order_pref'] = '茨城県';
-                break;
-            case 9:
-                $guest['order_pref'] = '栃木県';
-                break;
-            case 10:
-                $guest['order_pref'] = '群馬県';
-                break;
-            case 11:
-                $guest['order_pref'] = '埼玉県';
-                break;
-            case 12:
-                $guest['order_pref'] = '千葉県';
-                break;  
-            case 13:
-                $guest['order_pref'] = '東京都';
-                break;
-            case 14:
-                $guest['order_pref'] = '神奈川県';
-                break;
-            case 15:
-                $guest['order_pref'] = '新潟県';
-                break;
-            case 16:
-                $guest['order_pref'] = '富山県';
-                break;                                
+            //都道府県判定(穏やかな比較でも問題ないので、switchを使う 長くなりそうなので、どっかにメソッドとして作るのも検討)
+            switch($guest['order_pref']){
+                case 1:
+                    $guest['order_pref'] = '北海道';
+                    break;
+                case 2:
+                    $guest['order_pref'] = '青森県';
+                    break;
+                case 3:
+                    $guest['order_pref'] = '岩手県';
+                    break;
+                case 4:
+                    $guest['order_pref'] = '宮城県';
+                    break;  
+                case 5:
+                    $guest['order_pref'] = '秋田県';
+                    break;
+                case 6:
+                    $guest['order_pref'] = '山形県';
+                    break;
+                case 7:
+                    $guest['order_pref'] = '福島県';
+                    break;
+                case 8:
+                    $guest['order_pref'] = '茨城県';
+                    break;
+                case 9:
+                    $guest['order_pref'] = '栃木県';
+                    break;
+                case 10:
+                    $guest['order_pref'] = '群馬県';
+                    break;
+                case 11:
+                    $guest['order_pref'] = '埼玉県';
+                    break;
+                case 12:
+                    $guest['order_pref'] = '千葉県';
+                    break;  
+                case 13:
+                    $guest['order_pref'] = '東京都';
+                    break;
+                case 14:
+                    $guest['order_pref'] = '神奈川県';
+                    break;
+                case 15:
+                    $guest['order_pref'] = '新潟県';
+                    break;
+                case 16:
+                    $guest['order_pref'] = '富山県';
+                    break;                                
+            }
+            //ビューにゲストの情報を格納した変数を渡す
+            $this->set(compact('guest'));
         }
-        //ビューにゲストの情報を格納した変数を渡す
-        $this->set(compact('guest'));
+
+        //ログイン時未ログイン時共有処理
+        $this->set(compact('islogin'));
 
         //カート内の情報を読み込む
         $items = $session->read('carts');
         $this->set(compact('items'));
-
-        
-        
-
-        //payments
-        // $payments = TableRegistry::getTableLocator()->get('payments');
-        // $payments_query = $payments->find();
-        
-
     }
 
 
