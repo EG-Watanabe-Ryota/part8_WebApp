@@ -5,9 +5,10 @@
 	<p>下記項目にご入力ください。<br>
 	入力後、一番下の「確認ページへ」ボタンをクリックしてください。</p>
 	<form name="form1" id="form1" method="post" action="">
-		<input type="hidden" name="mode" value="nonmember_confirm">
-		<input type="hidden" name="uniqid" value="61a9a707c7757LUdQg3R5">
-		<input type="hidden" name="transactionid" value="87dffe6cf99e055ca2fbe1edc8627acaec60a326">
+        <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>">
+		<!-- <input type="hidden" name="mode" value="nonmember_confirm"> -->
+		<!-- <input type="hidden" name="uniqid" value="61a9a707c7757LUdQg3R5"> -->
+		<!-- <input type="hidden" name="transactionid" value="87dffe6cf99e055ca2fbe1edc8627acaec60a326"> -->
 		<div class="nomenber_tb">	
             <table summary="お客様情報入力">
 				<tbody><tr>
