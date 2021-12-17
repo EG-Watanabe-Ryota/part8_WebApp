@@ -71,7 +71,13 @@ class OrdersController extends AppController
                 $address=$row->address;
                 $tel=$row->tel;
             }
-            $this->set(compact('name','postal_code','address','tel'));
+
+            //addCompleteに送る配列変数
+            $project = ['customer_id' => $id, 
+                        'payment_id'  => $method_result,
+                        'address'     => $address,
+                        'name'        => $name];
+            $this->set(compact('name','postal_code','address','tel','project'));
         }
         //ログインしてないときの処理
         else{
@@ -128,8 +134,13 @@ class OrdersController extends AppController
                     $guest['order_pref'] = '富山県';
                     break;                                
             }
+            $project = [ 
+            'payment_id'  => $guest['payment'],
+            'address'     => h($guest['order_pref']) . h($guest['order_addr01']) . h($guest['order_addr02']),
+            'name'        => h($guest['order_name01']) .  h($guest['order_name02'])
+            ];
             //ビューにゲストの情報を格納した変数を渡す
-            $this->set(compact('guest'));
+            $this->set(compact('guest','project'));
         }
 
         //ログイン時未ログイン時共有処理
@@ -140,12 +151,51 @@ class OrdersController extends AppController
         $this->set(compact('items'));
     }
 
+    public function addComplete(){
+        //前ページでPOST送信された$projectを受け取る
+        $order_data=$_POST;
+
+        $result = $this->Authentication->getResult();
+
+        // debug($order_data);
+        $ordersTable=TableRegistry::getTableLocator()->get('orders');
+        $order=$ordersTable->newEmptyEntity();
+
+        
+        if($result->isValid()){
+            $order->customer_id=$order_data['customer_id'];
+        }
+        $order->shipment_id=1;
+        $order->payment_id=$order_data['payment_id'];
+        $order->address=$order_data['address'];
+        $order->name=$order_data['name'];
+
+        if ($ordersTable->save($order)) {
+            $id = $order->id;
+        }
+
+        //セッション破棄
+        $session = $this->getRequest()->getSession();
+        if ($session->check('guest')) {
+            $session->destroy('guest');
+        }
+
+        //topページか注文受け付けましたページにリダイレクトさせないと更新かけるとテーブルに書き込んでしまう
+        $this->redirect(['controller' => 'orders', 'action' => 'orderComplete']);
+        
+        
+    }
+
+    public function orderComplete(){
+
+    }
+
 
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->allowUnauthenticated(['index','payment','confirm']);
+        $this->Authentication->allowUnauthenticated(['index','payment','confirm','addComplete']);
     }
 
 

@@ -1,20 +1,13 @@
 <?php
-namespace Cart\Model\Table;
+// src/Model/Table/CartsTable.php
+namespace App\Model\Table;
 
-use Cake\Event\Event;
 use Cake\ORM\Table;
 
 class OrdersTable extends Table
 {
-    public function place($order)
+    public function initialize(array $config) : void
     {
-        if ($this->save($order)) {
-            $this->Cart->remove($order);
-            $event = new Event('Model.Order.afterPlace', $this, ['order' => $order]);
-            $this->eventManager()->dispatch($event);
-            return true;
-        }
-        return false;
+        $this->addBehavior('Timestamp');
     }
 }
-?>

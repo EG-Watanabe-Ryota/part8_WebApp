@@ -15,6 +15,9 @@
  */
 
 $cakeDescription = 'CakePHP: the rapid development php framework';
+
+    
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,6 +31,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?> 
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake','header']) ?>
 
@@ -36,26 +40,40 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    
     <header>
-        <h1>Nabe</h1>
-        <div class='new_member'>
+        <div class='header_nav'>
+            <h1>Nabe</h1>
+            <div class='nav-icon'>
+                <!-- ログイン判定する -->
+                <div class='new_member'>    
+                    <!-- <i class="fas fa-user-plus"><br>会員登録</i> -->
+                    <a href="<?= $this->Url->build(["controller" => "customers", "action" => "add"]) ?>" 
+                        class="btn register_btn" type='button'><span><i class="fas fa-user-plus fa-3x"></i></span></a><br>会員登録
+                </div>
+                
+                <div class='login'>
+                    <!-- <i class="fas fa-sign-in-alt"><br>ログインへ</i> -->
+                    <a href="<?= $this->Url->build(["controller" => "customers", "action" => "login"]) ?>" 
+                        class="btn register_btn" type='button'><span><i class="fas fa-sign-in-alt fa-3x"></i></span></a><br>ログイン
+                </div>
 
+                <!-- ログインしてたらマイページへ用のアイコンを表示
+                <div class='mypage'>
+                    <i class="fas fa-user"><br>マイページへ</i>
+                </div> -->
+
+                <div class='cart'>
+                <!-- <i class="fas fa-shopping-cart"><br>カートへ</i> -->
+                    <a href="<?= $this->Url->build(["controller" => "customers", "action" => "login"]) ?>" 
+                        class="btn register_btn" type='button'><span><i class="fas fa-shopping-cart fa-3x"></i></span></a><br>カート
+                </div>
+            </div>
         </div>
-
-        <div class='login'>
-
-        </div>
-
-        <div class='cart'>
-
-        </div>
-
         <div class='header_bar'>
             <ul style='list-style: none;'>
                 <li>HOME</li>
                 <li>カテゴリ</li>
-                <li>カテゴリ</li> 
+                <li>お問い合わせ</li> 
                 <li>カテゴリ</li>                                                    
             </ul>
         </div>
@@ -73,3 +91,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </footer>
 </body>
 </html>
+
+
+<!-- $this->Html->image("recipes/6.jpg", [
+    "alt" => "Brownies",
+    'url' => ['controller' => 'Recipes', 'action' => 'view', 6]
+]); -->

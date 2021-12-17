@@ -60,7 +60,7 @@
                 <p>上記の内容でよろしければ「購入手続きへ」ボタンをクリックしてください。</p>
             <div class='btn_next'>
             <?php if($islogin):?>
-                <button><a href='/orders/logged_in_payment'>購入手続きへ</a></button>
+                <button><a href='/orders/customerPayment'>購入手続きへ</a></button>
             <?php else:?>
                 <button><a href='/orders/index'>購入手続きへ</a></button>
             <?php endif; ?>

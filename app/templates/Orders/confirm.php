@@ -48,6 +48,12 @@
     <p><?=h($payment_name)?></p>
 
     <!-- 購入確定ボタンをここにつくる -->
+    <?= $this->Form->create(null, ['url' => ['action' => 'addComplete']]) ?>
+    <?php foreach($project as $key=>$val):?>
+        <?=$this->Form->hidden(h($key),['value'=>$val]);?>
+    <?php endforeach;?>
+    <?= $this->Form->button('購入確定') ?>
+    <?= $this->Form->end() ?>
 
 <?php else:?>
     <!-- ユーザーがゲストのときの処理 -->
@@ -95,4 +101,12 @@
     <!-- ハイフン処理忘れないように -->
     <p>電話番号</p>
     <p><?=h($guest['order_tel01']) . '-' . h($guest['order_tel02'] . '-' . h($guest['order_tel03']))?></p>
+
+    <!-- 購入確定ボタンをここにつくる -->
+    <?= $this->Form->create(null, ['url' => ['action' => 'addComplete']]) ?>
+    <?php foreach($project as $key=>$val):?>
+        <?=$this->Form->hidden(h($key),['value'=>$val]);?>
+    <?php endforeach;?>
+    <?= $this->Form->button('購入確定') ?>
+    <?= $this->Form->end() ?>
 <?php endif; ?>
