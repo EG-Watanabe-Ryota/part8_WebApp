@@ -21,13 +21,15 @@ services:
       - ./mysql:/var/lib/mysql
         # ./mysql/conf:/etc/mysql/
     restart: always
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    # command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports: 
       - 3307:3306
     environment: 
       MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: cake_cms
+      MYSQL_DATABASE: mydb
       MYSQL_USER: user
       MYSQL_PASSWORD: test
+    command: bash -c 'usermod -o -u 1000 mysql; groupmod -o -g 500 mysql; chown -R mysql:root /var/run/mysqld/; /entrypoint.sh mysqld --user=mysql --console'
+
 
     

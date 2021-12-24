@@ -10,8 +10,7 @@
         </div>
 
         <div class="product_wrapper">
-            <p>TOP>ステンレス</p>
-            <h2>ステンレス</h2>
+            <p>TOP><?=h($category)?></p>
             <hr>
             <div class='products'>
                 <?php foreach($products as $product):?>

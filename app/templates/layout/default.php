@@ -42,7 +42,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <body>
     <header>
         <div class='header_nav'>
-            <h1>Nabe</h1>
+            <h1><?=$this->html->link('Nabe', ['controller' => 'Pages', 'action' => 'display', 'home'])?></h1>
             <div class='nav-icon'>
                 <!-- ログイン判定する -->
                 <div class='new_member'>    
@@ -64,7 +64,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
                 <div class='cart'>
                 <!-- <i class="fas fa-shopping-cart"><br>カートへ</i> -->
-                    <a href="<?= $this->Url->build(["controller" => "customers", "action" => "login"]) ?>" 
+                    <a href="<?= $this->Url->build(["controller" => "orders", "action" => "cart"]) ?>" 
                         class="btn register_btn" type='button'><span><i class="fas fa-shopping-cart fa-3x"></i></span></a><br>カート
                 </div>
             </div>
