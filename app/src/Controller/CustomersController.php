@@ -13,10 +13,9 @@ class CustomersController extends AppController
         exit;
     }
 
-    public function view($id)
+    public function view()
     {
-        $customer = $this->Customers->get($id);
-        $this->set(compact('customer'));
+
     }
 
     public function mypage(){
@@ -52,7 +51,8 @@ class CustomersController extends AppController
         // 認証成功
         if ($result->isValid()) {
             $target = $this->Authentication->getLoginRedirect() ?? '/customers/index';
-            return $this->redirect($target);
+            // return $this->redirect($target);
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
         // ログインできなかった場合
         if ($this->request->is('post') && !$result->isValid()) {
@@ -63,7 +63,7 @@ class CustomersController extends AppController
     public function logout()
     {
         $this->Authentication->logout();
-        return $this->redirect(['action' => 'login']);
+        return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
     }
 
 

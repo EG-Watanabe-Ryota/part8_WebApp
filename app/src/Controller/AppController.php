@@ -45,6 +45,8 @@ class AppController extends Controller
         $this->loadComponent('Flash');
 
         $this->loadComponent('Authentication.Authentication');
+        $result=$this->Authentication->getResult();
+        $this->set(compact('result'));
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.

@@ -45,28 +45,48 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <h1><?=$this->html->link('Nabe', ['controller' => 'Pages', 'action' => 'display', 'home'])?></h1>
             <div class='nav-icon'>
                 <!-- ログイン判定する -->
-                <div class='new_member'>    
-                    <!-- <i class="fas fa-user-plus"><br>会員登録</i> -->
-                    <a href="<?= $this->Url->build(["controller" => "customers", "action" => "add"]) ?>" 
-                        class="btn register_btn" type='button'><span><i class="fas fa-user-plus fa-3x"></i></span></a><br>会員登録
-                </div>
+                <?php if($result->isValid()):?>
+
+                    <!-- ログインしてたらマイページへ用のアイコンを表示 -->
+                    <div class='login'>    
+                        <!-- <i class="fas fa-user-plus"><br>会員登録</i> -->
+                        <a href="<?= $this->Url->build(["controller" => "customers", "action" => "logout"]) ?>" 
+                            class="btn register_btn" type='button'><i class="fas fa-sign-out-alt fa-3x"></i></i></span></a><br>ログアウト
+                    </div>
+
+                    <div class='login'>
+                        <!-- <i class="fas fa-user"><br>マイページへ</i> -->
+                        <a href="<?= $this->Url->build(["controller" => "mypage", "action" => "index"]) ?>" 
+                            class="btn register_btn" type='button'><span><i class="fas fa-user fa-3x"></i></span></a><br>マイページへ
+                    </div>
+                    
+
+                    <div class='cart'>
+                        <!-- <i class="fas fa-shopping-cart"><br>カートへ</i> -->
+                        <a href="<?= $this->Url->build(["controller" => "orders", "action" => "cart"]) ?>" 
+                            class="btn register_btn" type='button'><span><i class="fas fa-shopping-cart fa-3x"></i></span></a><br>カート
+                    </div>
+                <?php else:?>
+                    <div class='new_member'>    
+                        <!-- <i class="fas fa-user-plus"><br>会員登録</i> -->
+                        <a href="<?= $this->Url->build(["controller" => "customers", "action" => "add"]) ?>" 
+                            class="btn register_btn" type='button'><span><i class="fas fa-user-plus fa-3x"></i></span></a><br>会員登録
+                    </div>
                 
-                <div class='login'>
-                    <!-- <i class="fas fa-sign-in-alt"><br>ログインへ</i> -->
-                    <a href="<?= $this->Url->build(["controller" => "customers", "action" => "login"]) ?>" 
-                        class="btn register_btn" type='button'><span><i class="fas fa-sign-in-alt fa-3x"></i></span></a><br>ログイン
-                </div>
+                    <div class='login'>
+                        <!-- <i class="fas fa-sign-in-alt"><br>ログインへ</i> -->
+                        <a href="<?= $this->Url->build(["controller" => "customers", "action" => "login"]) ?>" 
+                            class="btn register_btn" type='button'><span><i class="fas fa-sign-in-alt fa-3x"></i></span></a><br>ログイン
+                    </div>
 
-                <!-- ログインしてたらマイページへ用のアイコンを表示
-                <div class='mypage'>
-                    <i class="fas fa-user"><br>マイページへ</i>
-                </div> -->
+                    <div class='cart'>
+                        <!-- <i class="fas fa-shopping-cart"><br>カートへ</i> -->
+                        <a href="<?= $this->Url->build(["controller" => "orders", "action" => "cart"]) ?>" 
+                            class="btn register_btn" type='button'><span><i class="fas fa-shopping-cart fa-3x"></i></span></a><br>カート
+                    </div>
+                <?php endif;?>
 
-                <div class='cart'>
-                <!-- <i class="fas fa-shopping-cart"><br>カートへ</i> -->
-                    <a href="<?= $this->Url->build(["controller" => "orders", "action" => "cart"]) ?>" 
-                        class="btn register_btn" type='button'><span><i class="fas fa-shopping-cart fa-3x"></i></span></a><br>カート
-                </div>
+
             </div>
         </div>
         <div class='header_bar'>
