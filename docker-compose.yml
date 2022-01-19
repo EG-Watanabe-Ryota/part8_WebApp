@@ -5,10 +5,11 @@ services:
     image: myphpimage
     volumes:
       - ./app:/var/www/app
+      - ./app2:/var/www/app2
     #command: cms/bin/cake server -H 0.0.0.0
     ports:
       - 8080:80
-      - 8765:8765
+      - 8081:81
     restart: always
     privileged: true
     

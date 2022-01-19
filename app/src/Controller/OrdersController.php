@@ -148,16 +148,21 @@ class OrdersController extends AppController
 
         //カート内の情報を読み込む
         $items = $session->read('carts');
+        debug($items);
         $this->set(compact('items'));
     }
 
     public function addComplete(){
         //前ページでPOST送信された$projectを受け取る
         $order_data=$_POST;
+        $session = $this->getRequest()->getSession(); //セッション処理
+        //カート内の情報を読み込む
+        $items = $session->read('carts');
 
         $result = $this->Authentication->getResult();
 
         // debug($order_data);
+        //ordersテーブルにユーザー情報を入れる処理
         $ordersTable=TableRegistry::getTableLocator()->get('orders');
         $order=$ordersTable->newEmptyEntity();
 
@@ -172,6 +177,17 @@ class OrdersController extends AppController
 
         if ($ordersTable->save($order)) {
             $id = $order->id;
+        }
+
+        //order_dateilsテーブルに情報を入れる処理
+        $OrderDatailsTable=TableRegistry::getTableLocator()->get('OrderDatails');
+        $OrderDatail=$OrderDatailsTable->newEmptyEntity();
+        $print = 'savaしたで';
+
+        foreach($items as $val){
+            $OrderDatail->product_id = $val['id'];
+            $OrderDatail->order_id = $id;
+            $OrderDatailsTable->save($OrderDatail);
         }
 
         //セッション破棄

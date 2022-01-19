@@ -63,6 +63,8 @@ RUN composer self-update && composer create-project --prefer-dist cakephp/app:4.
 #Install CakePHP(composerコマンドが使えない場合)*2
 #RUN php composer.phar create-project --prefer-dist cakephp/app:4.* cms
 
+#認証インストール
+RUN composer require "cakephp/authentication:^2.0"
 #Apacheの設定ファイルを開く
 #vi /etc/httpd/conf/httpd.conf
 

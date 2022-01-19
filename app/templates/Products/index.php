@@ -36,6 +36,8 @@
                             <input type="hidden" name="price" value=<?=$product->price?>>
                             <!--imgパス送るとこ-->
                             <input type="hidden" name="img" value=<?=$product->img?>>
+                            <!-- id送るとこ -->
+                            <input type="hidden" name="id" value=<?=$product->id?>>
 
                             <!--カート追加ボタン-->
                             <label style="display:block;">

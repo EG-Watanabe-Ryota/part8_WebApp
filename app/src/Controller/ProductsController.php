@@ -26,12 +26,14 @@ class ProductsController extends AppController
                 $quantity=$_POST['quantity'];
                 $price=$_POST['price'];
                 $img=$_POST['img'];
+                $id=$_POST['id'];
 
                 if ($session->check('carts')) {
                     $items = $session->read('carts');
                 }
                 
-                $items[] = ['product_name' =>$product_name,
+                $items[] = ['id' =>$id,
+                            'product_name' =>$product_name,
                             'quantity'=> $quantity,
                             'price' => $price,
                             'img' => $img];
