@@ -13,16 +13,6 @@ class CustomersController extends AppController
         exit;
     }
 
-    public function view()
-    {
-
-    }
-
-    public function mypage(){
-
-        
-    }
-
     public function add()
     {
         $customer = $this->Customers->newEmptyEntity();
