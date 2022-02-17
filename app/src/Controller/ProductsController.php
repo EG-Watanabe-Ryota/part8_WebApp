@@ -59,7 +59,7 @@ class ProductsController extends AppController
         $product = $this->Products->findById($id)->firstOrFail();
         $this->set(compact('product'));
 
-                //セッション周り
+        //セッション周り
         $session = $this->getRequest()->getSession();
         //$session->destroy();
         if ($this->getRequest()->isPost()) {

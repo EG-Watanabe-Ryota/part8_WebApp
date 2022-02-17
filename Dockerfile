@@ -89,3 +89,6 @@ RUN composer require "cakephp/authentication:^2.0"
 #git reset --hard ハッシュ値
 
 #認証インストール忘れずに
+
+#php内の時間を日本時間にするoka
+# RUN sed -ri 's/;date.timezone =/date.timezone = Asia\/Tokyo/g' /etc/opt/remi/php81/php.ini

@@ -37,8 +37,6 @@ class AppAuthenticationServiceProvider implements AuthenticationServiceProviderI
             'loginUrl' => '/customers/login',
         ]);
 
-
-
         return $service;
     }
 }

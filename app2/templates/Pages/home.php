@@ -70,14 +70,10 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 </head>
 <body>
     <header>
-        <div class="container text-center">
-            <a href="https://cakephp.org/" target="_blank" rel="noopener">
-                <img alt="CakePHP" src="https://cakephp.org/v2/img/logos/CakePHP_Logo.svg" width="350" />
-            </a>
-            <h1>
-                Welcome to CakePHP <?= Configure::version() ?> Strawberry (🍓)
-            </h1>
-        </div>
+    <button type="button" class="drawer-toggle drawer-hamburger">
+      <span class="sr-only">toggle navigation</span>
+      <span class="drawer-hamburger-icon"></span>
+    </button>
     </header>
     <main class="main">
         <div class="container">

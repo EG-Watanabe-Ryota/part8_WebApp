@@ -1,0 +1,13 @@
+body{
+    height: 100%;
+    weight: 100%;
+}
+
+.main{
+    height: 1000px;
+    weight: 100%;
+}
+
+fieldset{
+    height: 450px;
+}

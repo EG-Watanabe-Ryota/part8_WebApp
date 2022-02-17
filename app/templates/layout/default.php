@@ -63,7 +63,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
                     <div class='cart'>
                         <!-- <i class="fas fa-shopping-cart"><br>カートへ</i> -->
-                        <a href="<?= $this->Url->build(["controller" => "orders", "action" => "cart"]) ?>" 
+                        <a href="<?= $this->Url->build(["controller" => "Carts", "action" => "index"]) ?>" 
                             class="btn register_btn" type='button'><span><i class="fas fa-shopping-cart fa-3x"></i></span></a><br>カート
                     </div>
                 <?php else:?>

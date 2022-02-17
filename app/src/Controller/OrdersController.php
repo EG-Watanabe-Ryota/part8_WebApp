@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 
 class OrdersController extends AppController
 {
@@ -17,7 +18,8 @@ class OrdersController extends AppController
             $this->redirect(['controller'=>'orders','action'=>'payment']);
         }
     }
-    public function payment(){
+    public function payment()
+        {
         $session = $this->getRequest()->getSession();
         // debug($session->read('guest'));
         if ($this->getRequest()->isPost()) {
@@ -41,12 +43,13 @@ class OrdersController extends AppController
     
     public function confirm(){
         //セッションの破棄を忘れずに！！！！
+        /*変数*/
         $session = $this->getRequest()->getSession(); //セッション処理
         $result = $this->Authentication->getResult(); //ログインしてるかどうか調べる変数
         $customer = $result->getData(); //ログインしているユーザー情報をもってくる
         $islogin = false; //ログイン判定に用いる変数
 
-        //ログイン時の処理
+        /*ログイン時の処理*/
         if($result->isValid()){
             $islogin = true;//ログインしてた変数を真にする
 
@@ -149,6 +152,8 @@ class OrdersController extends AppController
         //カート内の情報を読み込む
         $items = $session->read('carts');
         debug($items);
+        
+
         $this->set(compact('items'));
     }
 
@@ -159,6 +164,15 @@ class OrdersController extends AppController
         //カート内の情報を読み込む
         $items = $session->read('carts');
 
+        /*カート内の合計金額を計算*/
+        $total_price = 0;
+        foreach($items as $i=>$val){
+            $total_price+=$items[$i]['price']*$items[$i]['quantity'];
+        }
+        
+        /*注文日時を取得*/
+        $timestamp = new Time(date('Y-m-d H:i:s'));
+
         $result = $this->Authentication->getResult();
 
         // debug($order_data);
@@ -166,7 +180,7 @@ class OrdersController extends AppController
         $ordersTable=TableRegistry::getTableLocator()->get('orders');
         $order=$ordersTable->newEmptyEntity();
 
-        
+        /*レコード追加*/
         if($result->isValid()){
             $order->customer_id=$order_data['customer_id'];
         }
@@ -174,27 +188,57 @@ class OrdersController extends AppController
         $order->payment_id=$order_data['payment_id'];
         $order->address=$order_data['address'];
         $order->name=$order_data['name'];
+        $order->total_price=$total_price;
+
+        switch($order_data['payment_id']){
+            case 1:
+                $order->status='入金待ち';
+                break;
+            case 2:
+                $order->status='未発送';
+                break;
+        }
 
         if ($ordersTable->save($order)) {
             $id = $order->id;
+        } else {
+            $id=-1;//saveが失敗したらidに-1を代入
+            //-1とかで失敗判定するんじゃなくて、失敗しました的なページ作成してそこにリダイレクトさせた方がよさそう
         }
 
-        //order_dateilsテーブルに情報を入れる処理
-        $OrderDatailsTable=TableRegistry::getTableLocator()->get('OrderDatails');
-        $OrderDatail=$OrderDatailsTable->newEmptyEntity();
-        $print = 'savaしたで';
+        if($id !== -1){ //もし-1ならばorder_datailsテーブルに保存を行わない
+            /*order_dateilsテーブルに情報を入れる処理*/
+            $OrderDatailsTable=TableRegistry::getTableLocator()->get('OrderDatails');
+            // $OrderDatail=$OrderDatailsTable->newEmptyEntity();
 
-        foreach($items as $val){
-            $OrderDatail->product_id = $val['id'];
-            $OrderDatail->order_id = $id;
-            $OrderDatailsTable->save($OrderDatail);
+            /*productsテーブルを持ってくる*/
+            $ProductTable=TableRegistry::getTableLocator()->get('Products');
+
+
+            /*データ変換*/
+            foreach($items as $val){
+                $product_query = $ProductTable->get($val['id']); //productsテーブルからorder_datailsテーブルのproduct_idをもとに商品情報を引っ張ってくる
+                // debug($product_query->price);
+                $data[]=['product_id' => $val['id'],
+                        'order_id'    => $id,
+                        'quantity'    => $val['quantity'],
+                        'sub_total'   => (int)$val['quantity'] * (int)$product_query->price]; //一応int型にキャストしておく
+
+            }
+            $entities = $OrderDatailsTable->newEntities($data);
+
+            // Entitiesの分だけ保存処理
+            foreach ($entities as $entity) {
+                // Save entity
+                $OrderDatailsTable->save($entity);
+            }
         }
-
-        //セッション破棄
+        /*セッション破棄*/
         $session = $this->getRequest()->getSession();
         if ($session->check('guest')) {
             $session->destroy('guest');
         }
+        $session->destroy('items');
 
         //topページか注文受け付けましたページにリダイレクトさせないと更新かけるとテーブルに書き込んでしまう
         $this->redirect(['controller' => 'orders', 'action' => 'orderComplete']);
@@ -213,6 +257,4 @@ class OrdersController extends AppController
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated(['index','payment','confirm','addComplete']);
     }
-
-
 }
