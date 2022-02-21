@@ -1,3 +1,16 @@
+<?= $this->Form->create(null, [
+                'url' => [
+                    'controller' => 'Orders',
+                    'action' => 'find'
+                ]
+            ]); ?>
+            <fieldset>
+            <?= $this->Form->select('condition', $condition,['default' => '検索条件を入力'])?>
+                <?= $this->Form->input('find') ?>
+                <?= $this->Form->button('検索') ?>
+            </fieldset>
+            <?= $this->Form->end()?>
+
 
 <div class="table-responsive">
 　　<table class="table table-condensed">

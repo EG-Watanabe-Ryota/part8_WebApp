@@ -92,35 +92,16 @@ class ProductsController extends AppController
 
     }
     //検索結果のページ表示
-    public function find() {
+    public function find() 
+    {
         $session = $this->getRequest()->getSession();
         if ($this->request->is('post')) {
             $find = $_POST['find'];
             //POST送信された文字列でProductsテーブル内を検索
             $products = $this->Products->find()->where(["category like " => '%' . $find . '%']);
             $count = $products->count();
-
-            // $product_name=$_POST['product_name'];
-            // $quantity=$_POST['quantity'];
-            // $price=$_POST['price'];
-            // $img=$_POST['img'];
-            
-            
-            // if ($session->check('carts')) {
-            //     $items = $session->read('carts');
-            // }
-            
-            // $items[] = ['product_name' =>$product_name,
-            //             'quantity'=> $quantity,
-            //             'price' => $price,
-            //             'img' => $img];
-            
-            //Session::write($key, $value)
-            // $session->write('carts',$items);
-            // debug($session->read('carts'));
         }    
         $this->set(compact('products','find','count'));
-
         
     }
 

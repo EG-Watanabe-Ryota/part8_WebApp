@@ -15,20 +15,25 @@ class OrdersController extends AppController
         parent::initialize();
         $this->loadComponent('Paginator');
     }
+
+    
     public function index()
     {
+        $condition = ['検索条件を入力' => '検索条件を入力','受注番号' => '受注番号','顧客名' => '顧客名','お届け先' => 'お届け先'];
+        $status = ['入金待ち' => '入金待ち', '入金済み' => '入金済み', '未発送' => '未発送' ,'発送済み' => '発送済み','キャンセル' => 'キャンセル','新規受付' => '新規受付','変更するステータスを選択してください' => '変更するステータスを選択してください'];
         // ORM テーブルのページ分割
         $this->set('orders', $this->paginate($this->Orders));
             // 部分的に完了したクエリをページ分割する
         $orders = $this->Orders->find();
         $this->set('orders', $this->paginate($orders));
         
-        $status = ['入金待ち' => '入金待ち', '入金済み' => '入金済み', '未発送' => '未発送' ,'発送済み' => '発送済み','キャンセル' => 'キャンセル','新規受付' => '新規受付','変更するステータスを選択してください' => '変更するステータスを選択してください'];
-        $this->set(compact('orders','status'));
+        
+        $this->set(compact('orders','status','condition'));
 
         $chk = filter_input(INPUT_POST, 'chk', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
         if ($this->getRequest()->isPost()) {
             $status = $_POST['status'];
+            
             // $query = $orders->query();
 
             if (!empty($chk)) {
@@ -72,6 +77,48 @@ class OrdersController extends AppController
         
 
         $this->set(compact('data'));
+
+    }
+
+    //検索結果のページ表示
+    public function find() 
+    {
+        //statusをグローバル変数にするのもアリ
+        $status = ['入金待ち' => '入金待ち', '入金済み' => '入金済み', '未発送' => '未発送' ,'発送済み' => '発送済み','キャンセル' => 'キャンセル','新規受付' => '新規受付','変更するステータスを選択してください' => '変更するステータスを選択してください'];
+        $condition = ['検索条件を入力' => '検索条件を入力','受注番号' => '受注番号','顧客名' => '顧客名','お届け先' => 'お届け先'];
+        if ($this->request->is('post')) {
+            $find = $_POST['find'];
+            $cnd = $_POST['condition'];
+            $set_name = 'name';
+            switch($cnd){
+                case '受注番号':
+                    $set_name = 'id';
+                    break;
+                case '顧客名':
+                    $set_name = 'name';
+                    break;
+                case 'お届け先':
+                    $set_name = 'address';
+                    break;
+
+            }
+            //配列に変換前のテーブル情報を渡す
+            $orders = $this->Orders->find()->where([$set_name . " like " => '%' . $find . '%']);
+            $this->set('orders', $this->paginate($orders));
+
+            //POST送信された文字列でOrdersテーブル内を検索
+            $orders = $orders->toArray();
+
+            // $count = $orders->count(); //件数取得
+        }    
+
+
+        $this->set(compact('orders','find','status','condition'));
+        
+    }
+
+    public function confirm()
+    {
 
     }
 
