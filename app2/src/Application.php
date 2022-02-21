@@ -27,6 +27,7 @@ use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+
 use App\Authentication\AppAuthenticationServiceProvider;
 use Authentication\Middleware\AuthenticationMiddleware;
 
@@ -66,6 +67,8 @@ class Application extends BaseApplication
         }
 
         // Load more plugins here
+
+        $this->addPlugin('Authentication');
     }
 
     /**
@@ -103,7 +106,11 @@ class Application extends BaseApplication
             // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
-            ]));
+            ]))
+
+            ->add(new AuthenticationMiddleware(
+                new AppAuthenticationServiceProvider()
+            ));
 
         return $middlewareQueue;
     }
