@@ -65,43 +65,51 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->css(['page']) ?>
 </head>
-<body class="drawer drawer--left">
-<body class="drawer drawer--left">
-  <header role="banner">
-    <!-- ハンバーガーボタン -->
-    <button type="button" class="drawer-toggle drawer-hamburger">
-      <span class="sr-only">toggle navigation</span>
-      <span class="drawer-hamburger-icon"></span>
-    </button>
-    <!-- ナビゲーションの中身 -->
-    <nav class="drawer-nav" role="navigation">
-      <ul class="drawer-menu">
-        <li><a class="drawer-brand" href="#">Brand</a></li>
-        <li><a class="drawer-menu-item" href="#">Nav1</a></li>
-        <li><a class="drawer-menu-item" href="#">Nav2</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main role="main">
-    <!-- Page content -->
-  </main>
-  
-  <!-- ドロワーメニューの利用宣言 -->
-  <!-- <script>
-    $(document).ready(function() {
-    $('.drawer').drawer();
-  });
-  </script> -->
-    <!-- <nav class="top-nav">
-        <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
-        </div>
-        <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
-        </div>
-    </nav> -->
+<?php
+    echo $this->Html->css('navi');
+?>
 
+<div id="nav-drawer">
+  <input id="nav-input" type="checkbox" class="nav-unshown">
+  <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+  <div id="nav-menu">
+    <div class="nav-button"><label id="nav-open" for="nav-input"><span></span></label></div>
+    <div class="content">
+      <ul>
+        <li>商品登録</li>
+        <li>商品管理</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+    input[type="number"] {
+    width: 100px;
+  }
+
+  ul {
+    list-style: none;
+  }
+</style>
+<div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">管理アプリ</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link " aria-current="page" href="#">オンラインマニュアル</a>
+        <a class="nav-link " href="#">お問い合わせ</a>
+        <a class="nav-link " href="#">Links</a>
+        <!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+      </div>
+    </div>
+  </div>
+</nav>
+</div>
     
     <main class="main">
         

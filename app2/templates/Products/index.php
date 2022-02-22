@@ -1,19 +1,18 @@
 
-
-
-<div class="table-responsive">
-　　<table class="table table-condensed">
+<!-- <div class="table-responsive"> -->
+<h1>商品ページ</h1>
+　　<table class="table table-hover">
     　　  <thead>
-            <tr>
+            <tr class="table-primary">
                 
                 <!-- <th><button id="btn">全選択/全解除</button>選択box</th> -->
                 <?= $this->Form->create(); ?>
                 <th>商品番号</th>
                 <th>商品画像</th>
                 <th>商品名</th>
-                <th>価格(税込)</th>
+                <th>価格(円税込)</th>
                 <th>カテゴリ</th>
-                <th>在庫</th>
+                <th>在庫(個)</th>
                 <th>販売ステータス</th>
                 <th>編集ボタン<th>
             </tr>
@@ -47,8 +46,26 @@
         <?= $this->Paginator->next(__('next') . ' >') ?>
         <?= $this->Paginator->last(__('last') . ' >>') ?>
     </ul>
-
 </div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
 
 
 <!-- <script>

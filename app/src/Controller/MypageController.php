@@ -13,16 +13,41 @@ class MypageController extends AppController
 
         $orders = TableRegistry::getTableLocator()->get('Orders');
         $orders_query = $orders->find()->where(['customer_id' => $customer->id]);
-        $this->set(compact('orders_query'));
+        $count = $orders_query->count();
+        $this->set(compact('orders_query','count'));
     }
 
-    public function edit(){
+    public function edit()
+    {
         $result = $this->Authentication->getResult();
         $customer = $result->getData();
+        // debug($customer);
+        $this->set(compact('customer'));
+    }
 
-        $orders = TableRegistry::getTableLocator()->get('Orders');
-        $orders_query = $orders->find()->where(['customer_id' => $customer->id]);
-        $this->set(compact('orders_query'));
+    public function confirm()
+    {
+        $customer = $_POST;
+        $this->set(compact('customer'));
+    }
+
+    public function complete()
+    {
+        $result = $this->Authentication->getResult();
+        $customer = $result->getData();
+        $post = $_POST;
+        $data = ['name' => $post['name'],
+                'gender'=> $post['gender'],
+                'tel' => (int)$post['tel'],
+                'postal_code' => (int)$post['postal_code'],
+                'address' => $post['address']];
+        // debug($data);
+        $CustomersTable=TableRegistry::getTableLocator()->get('Customers');
+        $customer = $CustomersTable->get($customer->id);
+        $customer = $CustomersTable->patchEntity($customer, $data);
+        if($CustomersTable->save($customer)){
+            $this->redirect(['controller' => 'Mypage', 'action' => 'edit']);
+        }
     }
 }
 ?>

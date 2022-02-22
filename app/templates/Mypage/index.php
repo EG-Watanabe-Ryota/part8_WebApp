@@ -12,31 +12,31 @@
             </div>
 
             <div class='customer_conf'>
-            <a href="<?= $this->Url->build(["controller" => "Mypage", "action" => "customer_conf"]) ?>" 
+            <a href="<?= $this->Url->build(["controller" => "Mypage", "action" => "edit"]) ?>" 
                         class="btn register_btn" type='button'><span><i class="fas fa-user-cog"></i></span>会員登録内容変更</a>
             </div>
         </div>
 
 
         <div class="product_wrapper">
-            <h2>購入履歴</h2>
-            <p> 件の購入履歴があります</p>
+            <h2>注文履歴</h2>
+            <p> <?= h($count) ?>件の注文履歴があります</p>
             <table>
                 <tr><th>購入日</th><th>注文番号</th><th>合計金額</th><th>注文ステータス</th><th>注文詳細</th></tr>
                 <?php foreach($orders_query as $row):?>
                     <div class='history'>
                         <tr>
                             <!-- 購入日 -->
-                            <td>2021/12/22</td>
+                            <td><?=h($row->created_at)?></td>
 
                             <!-- 注文番号 -->
                             <td><?=h($row->id)?></td>
 
                             <!-- 合計金額 -->
-                            <td>1220円</td>
+                            <td><?=h($row->total_price)?></td>
 
                             <!-- 注文 -->
-                            <td>発送準備中</td>
+                            <td><?=h($row->status)?></td>
 
                             <td><button>注文詳細</button></td>
                         </tr>
