@@ -25,14 +25,6 @@ class ProductsController extends AppController
     public function add()
     {
         if ($this->request->is('post')) {
-            /*拡張子チェック*/
-            // $fileName = $_FILES['image']['name'];
-            // if (!empty($fileName)) {
-            //     $ext = substr($fileName, -3);
-            //     if($ext != 'jpg' && $ext != 'gif' && $ext != 'png'){
-            //         $error['image'] = 'type';
-            //     }
-            // }
             $image_name =$_FILES['image']['name'];
             $myFile = $this->request->getData('image');
             $name = $myFile->getClientFilename();
@@ -41,8 +33,7 @@ class ProductsController extends AppController
             $new_data = $this->request->getData();
 
             $product = $this->Products->newEntity($this->request->getData());
-                
-            /*ここの部分データ変換行ってパッチエンティティで検証してレコード追加するようにする */
+            
             $product->img = $image_name;
             $product->name = $new_data['name'];
             $product->stock = (int)$new_data['stock'];
@@ -55,7 +46,6 @@ class ProductsController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        // $this->viewBuilder()->setLayout('side_menu_none');
     }
 
     public function edit($product_id)

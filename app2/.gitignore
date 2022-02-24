@@ -1,6 +1,5 @@
 # CakePHP specific files #
 ##########################
-/mysql/*
 /config/app_local.php
 /config/.env
 /logs/*

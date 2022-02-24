@@ -8,9 +8,7 @@ class CartsController extends AppController
     public function index()
     {
         $session = $this->getRequest()->getSession();
-    
         //debug($session->read('carts'));
-        
         $items = $session->read('carts');
         $this->set(compact('items'));
 

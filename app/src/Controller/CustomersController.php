@@ -49,7 +49,6 @@ class CustomersController extends AppController
         // 認証成功
         if ($result->isValid()) {
             $target = $this->Authentication->getLoginRedirect() ?? '/customers/index';
-            // return $this->redirect($target);
             return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
         // ログインできなかった場合

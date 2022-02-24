@@ -8,7 +8,6 @@ class Product extends Entity
 {
     protected $_accessible = [
         '*' => true,
-        //ワイルドカード設定したほうがいいのか...(*_idみたいな) ←とりあえずそのままで実行してみる
         'id' => false,
     ];
 }

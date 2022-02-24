@@ -58,7 +58,6 @@ class OrdersController extends AppController
                 $this->redirect(['controller' => 'Orders', 'action' => 'index']);
             }
         }
-        // $this->set('order', $this->paginate());
     }
 
     public function orderDetails($order_id)

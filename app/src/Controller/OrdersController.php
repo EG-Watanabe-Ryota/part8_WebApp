@@ -196,7 +196,6 @@ class OrdersController extends AppController
             $id = $order->id;
         } else {
             $id=-1;//saveが失敗したらidに-1を代入
-            //-1とかで失敗判定するんじゃなくて、失敗しました的なページ作成してそこにリダイレクトさせた方がよさそう
         }
         if ($id !== -1) { //もし-1ならばorder_datailsテーブルに保存を行わない
             /*order_dateilsテーブルに情報を入れる処理*/
@@ -238,8 +237,6 @@ class OrdersController extends AppController
     public function orderComplete()
     {
     }
-
-
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
