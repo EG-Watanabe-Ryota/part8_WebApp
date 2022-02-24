@@ -1,7 +1,7 @@
 <div class="table-responsive">
 　　<table class="table table-condensed">
         <thead>
-            <tr>
+            <tr class="table-primary">
                 <th>商品画像</th>
                 <th>商品名</th>
                 <th>出荷ステータス先</th>
@@ -14,12 +14,13 @@
         <tbody>
             <?php foreach($data as $val):?>
                 <tr>
-                    <td><img src=<?='/var/www/app/webroot/img/'. $val['img'] ?>></td>
+                    <!-- <td><img src=<?='/var/www/app/webroot/img/'. $val['img'] ?>></td> -->
+                    <th><img src=<?= 'http://localhost:8080/img/' . h($val['img'])?> width="60px" height="60px"></th>
                     <td><?= h($val['name']) ?></td>
                     <td><?='入荷済み' ?></td>
                     <td><?='daibiki' ?></td>
-                    <th><?=h($val['price']) ?></th>
-                    <th><?=h($val['quantity'])?></th>
+                    <td><?=h($val['price']) ?></td>
+                    <td><?=h($val['quantity'])?></td>
                     <th><?=h($val['sub_total'])?></th>
                 </tr>
             <?php endforeach;?>

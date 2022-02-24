@@ -11,7 +11,7 @@
                 <th>商品番号</th>
                 <th>商品画像</th>
                 <th>商品名</th>
-                <th>価格(円税込)</th>
+                <th>価格(原価)</th>
                 <th>カテゴリ</th>
                 <th>在庫(個)</th>
                 <th>販売ステータス</th>
@@ -34,8 +34,8 @@
 <div>
 <div class="btn-toolbar">
 <div class="btn-group">
-<?= $this->Form->submit('確認画面へ',['class' => "btn btn-primary"]); ?>
-<?=$this->Form->button('商品ページに戻る', ['type' => 'button','class' => "btn btn-secondary"])?>
+<?= $this->Form->submit('確認画面へ',['class' => "btn btn-primary",'style' => 'margin-right:10px;']); ?>
+<?=$this->Form->button('商品ページに戻る', ['type' => 'button','class' => "btn btn-secondary",'location.href' =>"/products/index"])?>
 </div>
 </div>
 <?= $this->Form->end(); ?>

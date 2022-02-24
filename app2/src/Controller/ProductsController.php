@@ -1,32 +1,29 @@
 <?php
 // src/Controller/ProductsController.php
-
 namespace App\Controller;
+
+use App\Taxes\AppTax; //消費税を計算
 
 class ProductsController extends AppController
 {
     public $paginate = [
-		'limit' => 6 // 1ページに表示するデータ件数
-	];
+        'limit' => 6 // 1ページに表示するデータ件数
+    ];
     public function initialize(): void
     {
         parent::initialize();
         $this->loadComponent('Paginator');
     }
-
     public function index()
-
     {
         $products = $this->Products->find();
         $products_data = $products->toArray();
         $this->set('products', $this->paginate($products));
         $this->set(compact('products_data'));
-
     }
 
     public function add()
     {
-        
         if ($this->request->is('post')) {
             /*拡張子チェック*/
             // $fileName = $_FILES['image']['name'];
@@ -44,11 +41,14 @@ class ProductsController extends AppController
             $new_data = $this->request->getData();
 
             $product = $this->Products->newEntity($this->request->getData());
-
+                
+            /*ここの部分データ変換行ってパッチエンティティで検証してレコード追加するようにする */
             $product->img = $image_name;
             $product->name = $new_data['name'];
-            
-
+            $product->stock = (int)$new_data['stock'];
+            $product->price = (int)round(AppTax::tax($new_data['price']));
+            $product->category = $new_data['category'];
+            $product->status = '新規登録';
             if ($this->Products->save($product)) {
                 $this->Flash->success(__('登録完了！'));
                 return $this->redirect(['action' => 'add']);
@@ -66,24 +66,21 @@ class ProductsController extends AppController
                     '販売停止中' => '販売停止中',
                     '販売予告' => '販売予告',
                     '在庫切れ' => '在庫切れ'];
-
-        $this->set(compact('product','status'));
+        $product->price = AppTax::pre_tax($product->price);//税込価格を原価に変換
+        $this->set(compact('product', 'status'));
     }
 
     public function confirm()
     {
-        debug($_POST);
-        
-        if ($this->request->is('post')) 
-        {
+        // debug($_POST);
+        if ($this->request->is('post')) {
             //$_POSTをforeachあたりで回して、idでproductsテーブルから該当レコードを引っ張ってきて、全一致なら$productにnullを入れ、そうでないなら$_POSTを入れる
 
             //POSTがあるなら変数に格納
+            $_POST['price'] = (int)round(AppTax::tax($_POST['price']));
             $product = $_POST;
         }
-
         $this->set(compact('product'));
-        
     }
 
     public function editAdd()
@@ -100,24 +97,18 @@ class ProductsController extends AppController
         $products = $this->Products->find();
         $product = $this->Products->get($data['id']);
         $product = $this->Products->patchEntity($product, $data);
-
-        if($this->Products->save($product)){
+        if ($this->Products->save($product)) {
             $this->redirect(['controller' => 'products', 'action' => 'editComplete']);
         } else {
             $this->redirect(['controller' => 'products', 'action' => 'editFaild']);
         }
-
-       
     }
 
     public function editComplete()
     {
-
     }
 
     public function editFaild()
     {
-
     }
 }
-

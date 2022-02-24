@@ -75,10 +75,23 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
   <div id="nav-menu">
     <div class="nav-button"><label id="nav-open" for="nav-input"><span></span></label></div>
     <div class="content">
-      <ul>
-        <li>商品登録</li>
-        <li>商品管理</li>
-      </ul>
+      <div class="dropdown">
+    <button type="button" id="dropdown1"
+        class="btn btn-secondary dropdown-toggle"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false">
+      商品管理
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdown1">
+      <a class="dropdown-item" href="/products/add">商品登録</a>
+      <a class="dropdown-item" href="/products/index">商品ページ</a>
+    </div>
+
+    <a class="dropdown-item" href="/orders/index">注文管理</a>
+
+
+</div>
     </div>
   </div>
 </div>

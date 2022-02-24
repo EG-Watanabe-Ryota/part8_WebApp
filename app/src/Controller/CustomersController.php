@@ -9,18 +9,16 @@ class CustomersController extends AppController
     public function index()
     {
         $customer = $this->Authentication->getIdentity();
-        debug($customer);
+        // debug($customer);
         exit;
     }
 
     public function view()
     {
-
     }
 
-    public function mypage(){
-
-        
+    public function mypage()
+    {
     }
 
     public function add()
@@ -40,7 +38,7 @@ class CustomersController extends AppController
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Authentication->allowUnauthenticated(['login', 'logout','add']);
+        $this->Authentication->allowUnauthenticated(['login', 'logout', 'add']);
     }
 
     public function login()
@@ -65,9 +63,4 @@ class CustomersController extends AppController
         $this->Authentication->logout();
         return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
     }
-
-
-
-
 }
-?>

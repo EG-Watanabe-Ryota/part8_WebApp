@@ -7,14 +7,15 @@ use Cake\ORM\TableRegistry;
 
 class MypageController extends AppController
 {
-    public function index(){
+    public function index()
+    {
         $result = $this->Authentication->getResult();
         $customer = $result->getData();
 
         $orders = TableRegistry::getTableLocator()->get('Orders');
         $orders_query = $orders->find()->where(['customer_id' => $customer->id]);
         $count = $orders_query->count();
-        $this->set(compact('orders_query','count'));
+        $this->set(compact('orders_query', 'count'));
     }
 
     public function edit()
@@ -45,9 +46,8 @@ class MypageController extends AppController
         $CustomersTable=TableRegistry::getTableLocator()->get('Customers');
         $customer = $CustomersTable->get($customer->id);
         $customer = $CustomersTable->patchEntity($customer, $data);
-        if($CustomersTable->save($customer)){
+        if ($CustomersTable->save($customer)) {
             $this->redirect(['controller' => 'Mypage', 'action' => 'edit']);
         }
     }
 }
-?>

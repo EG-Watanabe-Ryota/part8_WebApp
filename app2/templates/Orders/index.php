@@ -1,23 +1,22 @@
+<h1>注文管理ページ</h1>
 <?= $this->Form->create(null, [
                 'url' => [
                     'controller' => 'Orders',
                     'action' => 'find'
                 ]
             ]); ?>
-            <fieldset>
             <?= $this->Form->select('condition', $condition,['default' => '検索条件を入力'])?>
                 <?= $this->Form->input('find') ?>
-                <?= $this->Form->button('検索') ?>
-            </fieldset>
+                <?= $this->Form->button('検索',['class' => "btn btn-primary"]) ?>
             <?= $this->Form->end()?>
 
 
 <div class="table-responsive">
 　　<table class="table table-condensed">
     　　  <thead>
-            <tr>
+            <tr class="table-primary">
                 
-                <th><button id="btn">全選択/全解除</button>選択box</th>
+                <th><button class="btn btn-secondary" id="btn" style="margin-right:5px;">全選択/全解除</button>選択box</th>
                 <?= $this->Form->create(); ?>
                 <th>受注番号</th>
                 <th>注文日時</th>
@@ -57,8 +56,8 @@
 
 </div>
 
-<?= $this->Form->select('status', $status, ['default' => '変更するステータスを選択してください'])?>
-<?= $this->Form->submit('変更を保存'); ?>
+<?= $this->Form->select('status', $status, ['default' => '変更するステータスを選択してください','class' => 'form-control',"width"=>"20px"])?>
+<?= $this->Form->submit('変更を保存',['class' => "btn btn-primary"]); ?>
 <?= $this->Form->end(); ?>
 </div>
 

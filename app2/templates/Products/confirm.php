@@ -4,7 +4,7 @@
     <div class="table-responsive">
 　　<table class="table table-condensed">
     　　  <thead>
-            <tr>
+            <tr class="table-primary">
                 
                 
                 <?= $this->Form->create(null,['url' => ['controller' => 'products','action' => 'edit_add']]); ?>
@@ -37,7 +37,7 @@
         </tbody>
 　　</table>
 <div>
-    <?= $this->Form->submit('登録'); ?>
+    <?= $this->Form->submit('登録',['class' => "btn btn-primary"]); ?>
     <?= $this->Form->end(); ?>
 <?php else:?>
     <h1>編集した箇所はありません</h1>   

@@ -1,5 +1,5 @@
 <?= $this->Flash->render() ?><!-- ← レイアウトになければ追加 -->
-<form method="post">
+<?= $this->Form->create(); ?>
     <fieldset>
         <label>メールアドレス</label>
         <input type="text" name="email">
@@ -11,4 +11,4 @@
         <button class="button-primary" type="submit">Submit</button>
     </fieldset>
     <?= $this->Html->link('新規登録はこちらから', ['action' => 'add']) ?>
-</form>
+<?= $this->Form->end(); ?>
