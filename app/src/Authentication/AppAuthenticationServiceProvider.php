@@ -40,4 +40,3 @@ class AppAuthenticationServiceProvider implements AuthenticationServiceProviderI
         return $service;
     }
 }
-?>

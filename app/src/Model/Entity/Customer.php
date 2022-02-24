@@ -23,4 +23,3 @@ class Customer extends Entity
 
     // ...
 }
-?>

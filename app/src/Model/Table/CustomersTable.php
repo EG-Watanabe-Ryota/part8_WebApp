@@ -7,7 +7,6 @@ use Cake\Validation\Validator;
 
 class CustomersTable extends Table
 {
-
     public function validationDefault(Validator $validator): Validator
     {
         return $validator
@@ -19,6 +18,4 @@ class CustomersTable extends Table
                 'message' => 'Please enter a valid role'
             ]);
     }
-
 }
-?>
