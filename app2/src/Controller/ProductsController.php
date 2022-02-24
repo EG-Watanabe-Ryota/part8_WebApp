@@ -2,7 +2,7 @@
 // src/Controller/ProductsController.php
 namespace App\Controller;
 
-use App\Taxes\AppTax; //消費税を計算
+use App\Taxes\AppTax; //消費税を計算する
 
 class ProductsController extends AppController
 {
