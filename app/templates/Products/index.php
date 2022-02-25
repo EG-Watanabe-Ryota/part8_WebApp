@@ -24,7 +24,7 @@
                             <?= $this->Html->link('商品詳細', ['action' => 'detail', $product->id]) ?>
                         </button>
                         <!--フォーム送信-->
-                        <form method="post" action="">
+                        <?= $this->Form->create() ?>
 
                             <!--数量入力テキストボックス-->
                             <label style="display:block; margin:0 0;">
@@ -45,7 +45,7 @@
                             </label>
 
                             <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>">
-                        </form>
+                            <?= $this->Form->end()?>
                     </div>
                 <?php endforeach; ?>
             </div>

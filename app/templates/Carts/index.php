@@ -22,7 +22,7 @@
                         <td>
                             <?=h($items[$i]['price']);?>円
                         </td>
-                        <form action="" method="POST">
+                        <?= $this->Form->create()?>
                             <td>
                                 <input type="number" name="quantity"   min='0' style="width:62px; height:27px; background-color:white;" value='<?=$items[$i]['quantity']?>'/>
                             </td>
@@ -35,7 +35,7 @@
                                 <input type="hidden" name="_csrfToken" autocomplete="off" value="<?= $this->request->getAttribute('csrfToken') ?>">
                                 <input type="submit" value="変更">
                             </td>
-                        </form>
+                        <?= $this->Form->end()?>
                         
                         <form action="" method="POST">
                             <td>
