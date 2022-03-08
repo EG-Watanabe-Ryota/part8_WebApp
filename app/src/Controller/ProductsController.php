@@ -11,7 +11,6 @@ class ProductsController extends AppController
         $category='all';
         //セッション周り
         $session = $this->getRequest()->getSession();
-        // $session->destroy();
         if ($this->getRequest()->isPost()) {
             // Post送信の場合の処理
             if (isset($_POST['post'])) {
@@ -38,10 +37,8 @@ class ProductsController extends AppController
                 
                 //Session::write($key, $value)
                 $session->write('carts', $items);
-                // debug($session->read('carts'));
                 $this->redirect(['controller' => 'Carts', 'action' => 'index']);
             }
-            // $products = $this->Paginator->paginate($this->Products->find());
         } else {
             // Post送信ではない場合の処理
             $products = $this->Paginator->paginate($this->Products->find());
@@ -56,7 +53,6 @@ class ProductsController extends AppController
 
         //セッション周り
         $session = $this->getRequest()->getSession();
-        //$session->destroy();
         if ($this->getRequest()->isPost()) {
             // Post送信の場合の処理
             $product_name=$_POST['product_name'];
@@ -76,7 +72,6 @@ class ProductsController extends AppController
             
             //Session::write($key, $value)
             $session->write('carts', $items);
-            debug($session->read('carts'));
         } else {
             // Post送信ではない場合の処理
         }

@@ -23,7 +23,7 @@
             <p> <?= h($count) ?>件の注文履歴があります</p>
             <table>
                 <tr><th>購入日</th><th>注文番号</th><th>合計金額</th><th>注文ステータス</th><th>注文詳細</th></tr>
-                <?php foreach($orders_query as $row):?>
+                <?php foreach($orders as $row):?>
                     <div class='history'>
                         <tr>
                             <!-- 購入日 -->

@@ -40,9 +40,6 @@ class OrdersController extends AppController
         $chk = filter_input(INPUT_POST, 'chk', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
         if ($this->getRequest()->isPost()) {
             $status = $_POST['status'];
-            
-            // $query = $orders->query();
-
             if (!empty($chk)) {
                 foreach ($chk as $key => $val) {
                     /*post送信されたorder_idをもとにステータスを変更する*/
@@ -65,20 +62,18 @@ class OrdersController extends AppController
         /*order_dateilsテーブルに情報を入れる処理*/
         $OrderDatailsTable=TableRegistry::getTableLocator()->get('OrderDatails');
 
-        $OrderDatails_query = $OrderDatailsTable->find()->where([
+        $OrderDatails = $OrderDatailsTable->find()->where([
             'order_id' => $order_id
             ]);
-        // debug($OrderDatails_query->toArray());
-        $orderDatails_data=$OrderDatails_query->toArray();
+        $orderDatails_data=$OrderDatails->toArray();
 
         /*productsテーブルを持ってくる*/
         $ProductTable=TableRegistry::getTableLocator()->get('Products');
 
         foreach ($orderDatails_data as $key => $val) {
-            $product_query = $ProductTable->get($val['product_id'])->toArray(); //productsテーブルからorder_datailsテーブルのproduct_idをもとに商品情報を引っ張ってくる
-            $data[$key]=$val->toArray() + $product_query;
+            $product = $ProductTable->get($val['product_id'])->toArray(); //productsテーブルからorder_datailsテーブルのproduct_idをもとに商品情報を引っ張ってくる
+            $data[$key]=$val->toArray() + $product;
         }
-        // debug($data);
         $this->set(compact('data'));
     }
 

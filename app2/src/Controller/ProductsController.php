@@ -62,7 +62,6 @@ class ProductsController extends AppController
 
     public function confirm()
     {
-        // debug($_POST);
         if ($this->request->is('post')) {
             //$_POSTをforeachあたりで回して、idでproductsテーブルから該当レコードを引っ張ってきて、全一致なら$productにnullを入れ、そうでないなら$_POSTを入れる
 

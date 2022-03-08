@@ -12,17 +12,16 @@ class MypageController extends AppController
         $result = $this->Authentication->getResult();
         $customer = $result->getData();
 
-        $orders = TableRegistry::getTableLocator()->get('Orders');
-        $orders_query = $orders->find()->where(['customer_id' => $customer->id]);
-        $count = $orders_query->count();
-        $this->set(compact('orders_query', 'count'));
+        $ordersTable = TableRegistry::getTableLocator()->get('Orders');
+        $orders = $ordersTable->find()->where(['customer_id' => $customer->id]);
+        $count = $orders->count();
+        $this->set(compact('orders', 'count'));
     }
 
     public function edit()
     {
         $result = $this->Authentication->getResult();
         $customer = $result->getData();
-        // debug($customer);
         $this->set(compact('customer'));
     }
 
@@ -42,7 +41,6 @@ class MypageController extends AppController
                 'tel' => (int)$post['tel'],
                 'postal_code' => (int)$post['postal_code'],
                 'address' => $post['address']];
-        // debug($data);
         $CustomersTable=TableRegistry::getTableLocator()->get('Customers');
         $customer = $CustomersTable->get($customer->id);
         $customer = $CustomersTable->patchEntity($customer, $data);

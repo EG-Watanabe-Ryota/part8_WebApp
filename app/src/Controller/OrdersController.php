@@ -22,7 +22,6 @@ class OrdersController extends AppController
     public function payment()
     {
         $session = $this->getRequest()->getSession();
-        // debug($session->read('guest'));
         if ($this->getRequest()->isPost()) {
             // Post送信の場合の処理
             $session->write('guest.payment', $_POST['payment']);
@@ -33,9 +32,9 @@ class OrdersController extends AppController
     public function customerPayment()
     {
         //DB処理
-        $payments = TableRegistry::getTableLocator()->get('Payments');
-        $payments_query = $payments->find();
-        foreach ($payments_query as $row) {
+        $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+        $payments = $paymentsTable->find();
+        foreach ($payments as $row) {
             $payment_methods[] = ['id'=>$row->id,'name'=>$row->name];
         }
         $this->set(compact('payment_methods'));
@@ -58,17 +57,17 @@ class OrdersController extends AppController
             $method_result = $_POST['payment'];
 
             //DB処理(paymentsテーブル)
-            $payments = TableRegistry::getTableLocator()->get('Payments');
-            $payments_query = $payments->find()->where(['id' => $method_result]);
-            foreach ($payments_query as $row) {
+            $paymentsTable = TableRegistry::getTableLocator()->get('Payments');
+            $payments = $paymentsTable->find()->where(['id' => $method_result]);
+            foreach ($payments as $row) {
                 $payment_name=$row->name;
             }
             $this->set(compact('payment_name'));
 
             //DB処理(customersテーブル)
-            $customers = TableRegistry::getTableLocator()->get('customers');
-            $customers_query = $customers->find()->where(['id' => $customer->id]);
-            foreach ($customers_query as $row) {
+            $customersTable = TableRegistry::getTableLocator()->get('customers');
+            $customers = $customersTable->find()->where(['id' => $customer->id]);
+            foreach ($customers as $row) {
                 $id=$row->id;
                 $name=$row->name;
                 $postal_code=$row->postal_code;
@@ -148,7 +147,6 @@ class OrdersController extends AppController
 
         //カート内の情報を読み込む
         $items = $session->read('carts');
-        // debug($items);
         $this->set(compact('items'));
     }
     public function addComplete()
@@ -164,12 +162,8 @@ class OrdersController extends AppController
         foreach ($items as $i => $val) {
             $total_price+=$items[$i]['price']*$items[$i]['quantity'];
         }
-        /*注文日時を取得*/
-        $timestamp = new Time(date('Y-m-d H:i:s'));
-
         $result = $this->Authentication->getResult();
 
-        // debug($order_data);
         //ordersテーブルにユーザー情報を入れる処理
         $ordersTable=TableRegistry::getTableLocator()->get('orders');
         $order=$ordersTable->newEmptyEntity();
@@ -208,12 +202,11 @@ class OrdersController extends AppController
 
             /*データ変換*/
             foreach ($items as $val) {
-                $product_query = $ProductTable->get($val['id']); //productsテーブルからorder_datailsテーブルのproduct_idをもとに商品情報を引っ張ってくる
-                // debug($product_query->price);
+                $product = $ProductTable->get($val['id']); //productsテーブルからorder_datailsテーブルのproduct_idをもとに商品情報を引っ張ってくる
                 $data[]=['product_id' => $val['id'],
                         'order_id'    => $id,
                         'quantity'    => $val['quantity'],
-                        'sub_total'   => (int)$val['quantity'] * (int)$product_query->price]; //一応int型にキャストしておく
+                        'sub_total'   => (int)$val['quantity'] * (int)$product->price]; //一応int型にキャストしておく
             }
             $entities = $OrderDatailsTable->newEntities($data);
 
